@@ -1,0 +1,211 @@
+﻿@model IEnumerable<Test2Admin.Models.Material>
+
+<head>
+    <style>
+        body {
+           
+            margin-top: 20px;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+            .sidenav a {
+                padding: 6px 6px 6px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+        .main {
+            margin-left: 200px;
+        }
+
+        .card {
+           
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            margin:40px;
+        }
+
+        .card-header {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            background-color: #30a89d;
+            color: #FFFFFF;
+            border-bottom: 3px solid #BBB;
+            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            font-family: 'Roboto', sans-serif;
+            font-size: 27px;
+            text-align: center;
+            padding: 0px;
+            margin-top: 0px;
+            overflow: hidden;
+            -webkit-transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-body {
+            color: #5c5c5c;
+            border-bottom: 3px solid #BBB;
+            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            text-align: center;
+            padding: 30px;
+            margin-top: 0px;
+            overflow: hidden;
+            -webkit-transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .td {
+            padding-bottom:10px;
+        }
+        .h1 {
+            font-size: 50px;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+        }
+        #full-screen {
+           
+            color: #5c5c5c;
+            font-family: 'Roboto', sans-serif;
+            font-size: 40px;
+            text-align: center;
+            padding: 0px;
+            margin-top: 0px;
+            overflow: hidden;
+            height:70px;
+        
+          
+        }
+
+
+        .btn {
+            box-shadow: inset 0px 0px 0px 1px #30a89d;
+            background-color: transparent;
+            border-radius: 25px;
+            display: inline-block;
+            cursor: pointer;
+            color: #505739;
+            font-family: Verdana;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 7px 14px;
+            text-decoration: none;
+            text-shadow: 2px 2px 5px #ffffff;
+            margin-top: -120px;
+            margin-right: 50px;
+        }
+
+            .btn:hover {
+                background-color: transparent;
+            }
+
+            .btn:active {
+                position: relative;
+                top: 1px;
+            }
+
+
+ 
+    </style>
+
+
+</head>
+<body>
+    <div id="main">
+    </div>
+    <div id="mySidenav" class="sidenav">
+        <a href="~/Teacher/Index">Panel Główny</a>
+        <a href="~/ForumThread/Index">Forum</a>
+        
+    </div>
+    <div class="main">
+    <div id="full-screen">
+        <p>MATERIAŁY</p>
+        <div style="float:right;"><a class="btn" href="/TeacherMaterials/Create">+</a></div>
+    </div>
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <label>Artykuły</label>
+        </div>
+
+
+        <div class="card-body">
+            @foreach (var item in Model)
+            {
+                <table style="width:100%">
+                    <tr style="width: 100%;border-bottom: 1px solid #8cc7b9; padding-top:10px; padding-bottom:10px;">
+                        @if (item.Articles != null)
+                        {
+                            <td style="float: left;margin-bottom: 15px;margin-top: 15px;">
+                                @Html.DisplayFor(modelItem => item.Articles)
+
+                            </td>
+
+                            <td style="float: right;margin-bottom: 15px;margin-top: 15px;">
+
+                                @Html.ActionLink(HttpUtility.HtmlDecode("&#9998;"), "Edit", new { id = item.MaterialsID }) |
+                                @Html.ActionLink(HttpUtility.HtmlDecode("&#128465;"), "Delete", new { id = item.MaterialsID })
+
+                            </td>
+                           
+                        }
+                    </tr>
+                </table>
+            }
+        </div>
+
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-header"> <label>Słownik</label></div>
+        <div class="card-body">
+            @foreach (var item in Model)
+            {
+                <table style="width:100%">
+                    <tr style="width: 100%;border-bottom: 1px solid #8cc7b9;">
+                        @if (item.Dictionary != null)
+                        {
+                        <td style="float: left;margin-bottom: 15px;margin-top: 15px;">
+                            @Html.DisplayFor(modelItem => item.Dictionary)
+
+                        </td>
+
+                        <td style="float: right;margin-bottom: 15px;margin-top: 15px;">
+                            @Html.ActionLink(HttpUtility.HtmlDecode("&#128456;"), "Details", new { id = item.MaterialsID }) |
+                            @Html.ActionLink(HttpUtility.HtmlDecode("&#9998;"), "Edit", new { id = item.MaterialsID }) |
+                            @Html.ActionLink(HttpUtility.HtmlDecode("&#128465;"), "Delete", new { id = item.MaterialsID })
+
+                        </td>
+                        }
+                    </tr>
+                    
+                </table>
+            }
+        </div>
+    </div>
+
+
+    </div>
+</body>

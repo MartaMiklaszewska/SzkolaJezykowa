@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Test2Admin.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+<head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+
+        body {
+            margin: 40px;
+            margin-top: 30px;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 18px;
+            border: thin;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        th {
+            background-color: #148988;
+            color: white;
+            font-size: 25px;
+        }
+
+        .btn {
+            color: #148988;
+            font-size: 30px;
+            border: 1px solid;
+            float: right;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="form-horizontal">
+        <h1>
+            UŻYTKOWNICY
+            <a href='@Url.Action("Create", "AddUser")' class="btn">&#43;</a>
+        </h1>
+        <p id="action-link">
+
+        </p>
+    </div>
+    <table class="table">
+        <tr>
+            <th>
+                <label>Imię</label>
+            </th>
+            <th>
+                <label>Nazwisko</label>
+            </th>
+            <th>
+                <label>Email użytkownika</label>
+            </th>
+            <th>
+                <label>Hasło użytkownika</label>
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+
+        <td style="float:right">
+            @Html.ActionLink(HttpUtility.HtmlDecode("&#9998;"), "Edit", new { id = item.UserID }) |
+            @Html.ActionLink(HttpUtility.HtmlDecode("&#128465;"), "Delete", new { id = item.UserID })
+
+        </td>
+    </tr>
+        }
+
+    </table>
+
+
+</body>

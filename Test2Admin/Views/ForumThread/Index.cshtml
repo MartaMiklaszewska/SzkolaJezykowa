@@ -1,0 +1,223 @@
+﻿@model IEnumerable<Test2Admin.Models.Comment>
+
+@{
+    ViewBag.Title = "Index";
+    
+}
+<head>
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+            .sidenav a {
+                padding: 6px 6px 6px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+        .main {
+            margin-left: 200px;
+        }
+
+        .btn-default {
+            background: #ffffff;
+            border-radius: 13px;
+            font-family: Arial;
+            color: #616161;
+            font-size: 16px;
+            padding: 10px 20px 10px 20px;
+            border: solid #518f99 2px;
+            text-decoration: none;
+            margin-top: 15px;
+            text-align: center;
+            margin-bottom:30px;
+        }
+        #btn-search {
+
+            background: #ffffff;
+            font-family: Arial;
+            color: #616161;
+            font-size: 20px;
+            border: solid #518f99 2px;
+            text-decoration: none;
+            text-align: center;
+        }
+        #form1 {
+            font-size: 20px;
+            border: solid #518f99 2px;
+            height: 41px;
+        }
+        h1 {
+            margin-top:20px;
+            font-size: 50px;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="mySidenav" class="sidenav">
+        <a href="~/Teacher/Index">Panel Główny</a>
+        <a href="~/TeacherMaterials/Index">Materiały</a>
+
+    </div>
+    <div class="main" style="height:auto">
+        <div style="display: flex; padding-right:-50px;">
+            <div class="col-lg-9">
+                <h1>
+                    Forum
+                </h1>
+                @using (Html.BeginForm("PostComment", "ForumThread", FormMethod.Post))
+                {
+                    <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample">
+                        <i class="fas fa-plus"></i>
+                        Dodaj nowy wątek
+                    </button>
+
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <br />
+                            <label>Tytuł wątku</label>
+                            <input type="text" name="CommentTitle" style="width:100%; height:50px; margin-top:15px" />
+                            <br />
+                            <label>Treść wątku</label>
+                            <input type="text" name="CommentInput" style="width:100%; height:100px; margin-top:15px" />
+                            <br />
+                            <input type="submit" value="Post Comment" class="btn btn-default" style="margin-top: 15px" />
+                        </div>
+                    </div>
+
+                }
+
+                <div class="bs-example">
+                    <div class="panel-group" id="accordionY">
+                        @{int i = 1;}
+                        @foreach (var comment in Model)
+                        {
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-target="#collapseOne_@i" style="font-size:20.5px">
+                                            @comment.Title
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne_@i" class="panel-collapse collapse" data-parent="#accordionY">
+                                    <div class="panel-body">
+                                        <table class="table">
+
+                                            <tr>
+
+                                                <td >
+                                                    <span style="margin-right:20px; font-size:20px; color:#2f6567">
+                                                        @comment.User.Email    
+                                                        @comment.User.Surname
+                                                    </span>
+                                                    <span style="font-size:18px">@Html.DisplayFor(modelItem => comment.Text)</span>
+                                                    <span style="margin-left:12px; font-size:14px">@Html.DisplayFor(modelItem => comment.CreatedOn)</span>
+                                                    <hr />
+                                                    @foreach (var reply in comment.Replies)
+                                                    {
+                                                       
+                                                        if (reply.User.Role == "teacher")
+                                                        {
+                                                            <div>
+                                                                <span style="font-size: 22px; color:gold;">
+                                                                    &#9734;
+                                                                </span>
+                                                                <span style="margin-right:20px; font-size:18px; color:#2f6567">
+                                                                    @reply.User.Email
+                                                                    @reply.User.Surname
+                                                                </span>
+
+                                                                <span style="font-size:16px">@reply.Text</span>
+                                                                <span style="font-size:12px">@reply.CreatedOn</span>
+                                                                <hr  style="border: 2px solid rgba(0, 117, 107, 0.4)"/>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span style="margin-right:20px; font-size:16px; color:#2f6567">
+                                                                @reply.User.Email
+                                                                @reply.User.Surname
+                                                            </span>
+
+                                                            <span style="font-size:16px">@reply.Text</span>
+                                                            <span style="font-size:12px">@reply.CreatedOn</span>
+
+                                                        }
+                                                    }
+                                                    @using (Html.BeginForm("PostReply", "ForumThread", FormMethod.Post))
+                                                    {
+                                                        <br />
+                                                        <input type="text" name="Reply" style="width:100%; height:100px; margin-top:15px" />
+                                                        <br />
+                                                        <input type="hidden" name="CommentID" value="@comment.CommentID" />
+                                                        <input type="submit" value="Post Reply" class="btn btn-default" style="margin-top: 15px" />
+                                                    }
+                                                </td>
+
+                                            </tr>
+
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            i++;
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-3" style="background-color: rgba(23, 167, 164, 0.42);">
+
+
+                @using (Html.BeginForm("Index", "ForumThread", FormMethod.Get))
+                {
+
+                <div class="input-group" style="margin-top:20px">
+                    <div class="form-outline">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="search" id="form1" class="form-control" name="searching" />
+                                </td>
+                                <td>
+                                    <button type="submit" id="btn-search" class="btn btn-primary" value=" Search">
+                                        &#8981;
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="input-group-append" style="float:right">
+
+                    </div>
+                </div>
+                }
+
+
+            </div>
+
+        </div>
+    </div>
+</body>

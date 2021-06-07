@@ -1,0 +1,76 @@
+﻿@model Test2Admin.Models.Material
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<head>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <style>
+
+        .heading {
+            border-bottom: 1px solid #329688;
+            padding-bottom: 9px;
+            position: relative;
+        }
+
+            .heading span {
+                background: #456c6b none repeat scroll 0 0;
+                bottom: -2px;
+                height: 3px;
+                left: 0;
+                position: absolute;
+                width: 75px;
+            }
+
+
+        label {
+            font-size: 15px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        dd {
+            font-size: 15px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 15px;
+        }
+
+        body {
+            width: 60%;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h4 class="heading"><strong>Pokaż</strong> szczegóły <span></span></h4>
+        <dl class="dl-horizontal">
+
+            <dt>
+                <label>Słownik</label>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Dictionary)
+            </dd>
+
+            <dt>
+                <label>Dokument PDF ze słownictwem</label><br />
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DetailsDictionary)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MaterialsID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</body>

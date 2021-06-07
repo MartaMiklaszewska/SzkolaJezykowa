@@ -1,0 +1,128 @@
+﻿@using Test2Admin.Models
+@model User
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+            .sidenav a {
+                padding: 6px 6px 6px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+        .main {
+            margin-left: 200px;
+        }
+
+
+
+        .text-left {
+            text-align: left !important;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        .btn-primary-outline {
+            background-color: transparent;
+            margin-left: 8px;
+            margin-top: 50px;
+            text-decoration: none;
+            font-size: 25px;
+            color: whitesmoke;
+            display: block;
+        }
+
+        #googleCalendarLink {
+            color: #148988;
+            font-size: 15px;
+            border: 1px solid;
+            float: right;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        #displayCalendar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    </div>
+    <div id="mySidenav" class="sidenav">
+
+        <a href="~/ForumThread/Index">Forum</a>
+        <a href="~/StudentMaterials/Index">Materiały</a>
+
+        @using (Html.BeginForm("Logout", "Login", FormMethod.Post))
+        {
+            <button type="submit" onclick="Logout" class="btn btn-lg btn-block btn-primary-outline text-left">Wyloguj się</button>
+        }
+    </div>
+    <div class="main">
+            <h1>Aktualności</h1>
+        <hr />
+
+        @if (ViewBag.EventList != null)
+        {
+            <table class="table table-hover">
+                <tr>
+                    <th>Nadchodzące wydarzenie</th>
+                    <th>Opis wydarzenia</th>
+                    <th>Czas rozpoczęcia</th>
+                    <th>Czas zakończenia</th>
+                </tr>
+
+                @foreach (var item in ViewBag.EventList as List<Test2Admin.Controllers.CalendarEvent>)
+                {
+                    <tr>
+                        <td>@item.Summary</td>
+                        <td>@item.Description</td>
+                        <td>@item.StartTime</td>
+                        <td>@item.EndTime</td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <div class="alert" alert-danger>Brak nadchodzących wydarzeń</div>
+        }
+
+        <div id="displayCalendar">
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%239ac5c2&amp;ctz=Europe%2FWarsaw&amp;src=d29yZHByZXNzdGVzdDUwQGdtYWlsLmNvbQ&amp;color=%23039BE5&amp;showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;mode=MONTH" style="border:solid 1px #777" width="800" height="400" frameborder="0" scrolling="no" align="middle"></iframe>
+        </div>
+    </div>
+</body>
+
+</html>
